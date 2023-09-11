@@ -221,6 +221,7 @@
                         title: title
                     },
                     success: function(data) {
+                        LoadAllDocument();
                         window.location = '../../views/users/viewingTheFIle.php?title=' + title;
                     }
                 })

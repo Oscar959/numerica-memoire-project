@@ -6,132 +6,192 @@ require("../../models/connexion.php");
 
 function onLoadSelect()
 {
-    $pdo = getConnexion();
+  $pdo = getConnexion();
 
-    $query = $pdo->prepare("SELECT * FROM categories");
+  $query = $pdo->prepare("SELECT * FROM categories");
 
-    $query->execute();
+  $query->execute();
 
-    $output = "";
+  $output = "";
 
-    while ($row = $query->fetch()) {
-        $output .= "
+  while ($row = $query->fetch()) {
+    $output .= "
         <option value=" . $row['id'] . ">" . $row['libelle'] . "</option>";
-    }
+  }
 
-    return $output;
+  return $output;
 }
 
 function loadTableDataCategories($select)
 {
-    $pdo = getConnexion();
-    $query = $pdo->prepare("SELECT title, sumUp,fileName, statusFile,	downloadNumber, CategoriesId FROM coursreleased WHERE CategoriesId= :CategoriesId AND statusFile='1'");
-    //$query->bindValue(":CategoriesId", $select, PDO::PARAM_STR);
-    $query->execute(array(
-        "CategoriesId" => $select
-    ));
+  $pdo = getConnexion();
+  $query = $pdo->prepare("SELECT title, sumUp,fileName, statusFile, downloadNumber, CategoriesId, `name`, `firstname`, `picture` FROM coursreleased as c INNER JOIN users as u ON c.userReleasedId = u.id WHERE statusFile='1' AND CategoriesId=:CategoriesId");
+  //$query->bindValue(":CategoriesId", $select, PDO::PARAM_STR);
+  $query->execute(array(
+    "CategoriesId" => $select
+  ));
 
 
-    $output = "";
+  $output = "";
 
-    while ($row = $query->fetch()) {
-        $output .= "
-        <div class='card'>
-        <div class='card-body'>
-          <h5 class='card-title'>Default Tabs Justified</h5>
+  while ($row = $query->fetch()) {
+    $output .= "
+    <div class='card'>
+    <div class='card-body'>
+      <h5 class='card-title text-black' style='font-family:verdana'>" . $row['title'] . "</h5>
 
-          <!-- Default Tabs -->
-          <ul class='nav nav-tabs d-flex' id='myTabjustified' role='tablist'>
-            <li class='nav-item flex-fill' role='presentation'>
-              <button class='nav-link w-100 active' id='home-tab' data-bs-toggle='tab' data-bs-target='#home-justified' type='button' role='tab' aria-controls='home' aria-selected='true'>Home</button>
-            </li>
-            <li class='nav-item flex-fill' role='presentation'>
-              <button class='nav-link w-100' id='profile-tab' data-bs-toggle='tab' data-bs-target='#profile-justified' type='button' role='tab' aria-controls='profile' aria-selected='false'>Profile</button>
-            </li>
-            <li class='nav-item flex-fill' role='presentation'>
-              <button class='nav-link w-100' id='contact-tab' data-bs-toggle='tab' data-bs-target='#contact-justified' type='button' role='tab' aria-controls='contact' aria-selected='false'>Contact</button>
-            </li>
-          </ul>
-          <div class='tab-content pt-2' id='myTabjustifiedContent'>
-            <div class='tab-pane fade show active' id='home-justified' role='tabpanel' aria-labelledby='home-tab'>
-              Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.
+      <!-- Default Accordion -->
+      <div class='accordion' id='accordionExample'>
+        <div class='accordion-item'>
+          <h2 class='accordion-header' id='headingOne'>
+            <button class='accordion-button' style='font-family:verdana' type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne'>
+              <strong>Information du travail</strong>
+            </button>
+          </h2>
+          <div id='collapseOne' class='accordion-collapse collapse show' aria-labelledby='headingOne' data-bs-parent='#accordionExample'>
+            <div class='accordion-body'>
+            " . $row['sumUp'] . " <br>
+
+            <button class='btn btn-primary mt-2 link-doc-class' id='".$row['fileName']."' style='font-family:verdana' type='button'>
+              <strong>Lire le livre</strong>
+            </button>
             </div>
-            <div class='tab-pane fade' id='profile-justified' role='tabpanel' aria-labelledby='profile-tab'>
-              Nesciunt totam et. Consequuntur magnam aliquid eos nulla dolor iure eos quia. Accusantium distinctio omnis et atque fugiat. Itaque doloremque aliquid sint quasi quia distinctio similique. Voluptate nihil recusandae mollitia dolores. Ut laboriosam voluptatum dicta.
-            </div>
-            <div class='tab-pane fade' id='contact-justified' role='tabpanel' aria-labelledby='contact-tab'>
-              Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
-            </div>
-          </div><!-- End Default Tabs -->
-
+          </div>
         </div>
-      </div>
+        <div class='accordion-item'>
+          <h2 class='accordion-header' id='headingTwo'>
+            <button class='accordion-button collapsed' style='font-family:verdana' type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='false' aria-controls='collapseTwo'>
+              <strong>Auteur du travail</strong>
+            </button>
+          </h2>
+          <div id='collapseTwo' class='accordion-collapse collapse' aria-labelledby='headingTwo' data-bs-parent='#accordionExample'>
+            <div class='accordion-body'>
+              <div class='row'>
+                <div class='col-lg-6'>
+                  Nom : <strong>" . $row['name'] . "</strong></br>
+                  Prenom : <strong>" . $row['firstname'] . "</strong></br>
+                </div>
+
+                <div class='col-lg-6'>
+                  <img src='../../views/users/upload/" . $row['picture'] . "' class='rounded-circle w-50 h-60'>
+                </div>
+              </div>
+              
+              
+            </div>
+          </div>
+        </div>
+        <div class='accordion-item'>
+          <h2 class='accordion-header' id='headingThree'>
+            <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapseThree' aria-expanded='false' aria-controls='collapseThree'>
+            <strong>Autres informations</strong>
+            </button>
+          </h2>
+          <div id='collapseThree' class='accordion-collapse collapse' aria-labelledby='headingThree' data-bs-parent='#accordionExample'>
+            <div class='accordion-body'>
+              <button type='button' class='btn btn-secondary'>
+                Nombre des vues:<span class='badge badge-black'>".$row['downloadNumber']."</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div><!-- End Default Accordion Example -->
+
+    </div>
+  </div>
     ";
-    }
-    return  $output;
+  }
+  return  $output;
 }
 function loadTableDataCategoriesTout()
 {
-    $pdo = getConnexion();
-    $query = $pdo->prepare("SELECT title, sumUp,fileName, statusFile, downloadNumber, CategoriesId, `name`, `firstname`, `picture` FROM coursreleased as c INNER JOIN users as u ON c.userReleasedId = u.id WHERE statusFile='1'");
-    //$query->bindValue(":CategoriesId", $select, PDO::PARAM_STR);
-    $query->execute();
-    $output = "";
+  $pdo = getConnexion();
+  $query = $pdo->prepare("SELECT title, sumUp,fileName, statusFile, downloadNumber, CategoriesId, `name`, `firstname`, `picture` FROM coursreleased as c INNER JOIN users as u ON c.userReleasedId = u.id WHERE statusFile='1'");
+  //$query->bindValue(":CategoriesId", $select, PDO::PARAM_STR);
+  $query->execute();
+  $output = "";
 
-    while ($row = $query->fetch()) {
-        $output .= "
+  while ($row = $query->fetch()) {
+    $output .= "
         <div class='card'>
         <div class='card-body'>
-          <h5 class='card-title'>".$row['title']."</h5>
+          <h5 class='card-title text-black' style='font-family:verdana'>" . $row['title'] . "</h5>
 
-          <!-- Default Tabs -->
-          <ul class='nav nav-tabs d-flex' id='myTabjustified' role='tablist'>
-            <li class='nav-item flex-fill' role='presentation'>
-              <button class='nav-link w-100 active' id='home-tab' data-bs-toggle='tab' data-bs-target='#home-justified' type='button' role='tab' aria-controls='home' aria-selected='true'>Info</button>
-            </li>
-            <li class='nav-item flex-fill' role='presentation'>
-              <button class='nav-link w-100' id='profile-tab' data-bs-toggle='tab' data-bs-target='#profile-justified' type='button' role='tab' aria-controls='profile' aria-selected='false'>Auteur</button>
-            </li>
-            <li class='nav-item flex-fill' role='presentation'>
-              <button class='nav-link w-100' id='contact-tab' data-bs-toggle='tab' data-bs-target='#contact-justified' type='button' role='tab' aria-controls='contact' aria-selected='false'>Autres</button>
-            </li>
-          </ul>
-          <div class='tab-content pt-2' id='myTabjustifiedContent'>
-            <div class='tab-pane fade show active' id='home-justified' role='tabpanel' aria-labelledby='home-tab'>
-             ".$row['sumUp']."
-            </div>
-            <div class='tab-pane fade' id='profile-justified' role='tabpanel' aria-labelledby='profile-tab'>
-              <div class='row'>
-                <div class='col-lg-4'>
-                    <img src='../../views/users/upload/".$row['picture']."' class='rounded-circle w-50 card-img-overlay img-thumbnail'>
+          <!-- Default Accordion -->
+          <div class='accordion' id='accordionExample'>
+            <div class='accordion-item'>
+              <h2 class='accordion-header' id='headingOne'>
+                <button class='accordion-button' style='font-family:verdana' type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne'>
+                  <strong>Information du travail</strong>
+                </button>
+              </h2>
+              <div id='collapseOne' class='accordion-collapse collapse show' aria-labelledby='headingOne' data-bs-parent='#accordionExample'>
+                <div class='accordion-body'>
+                " . $row['sumUp'] . " <br>
+
+                <button class='btn btn-primary mt-2 link-doc-class' id='".$row['fileName']."' style='font-family:verdana' type='button'>
+                  <strong>Lire le livre</strong>
+                </button>
                 </div>
-
               </div>
             </div>
-            <div class='tab-pane fade' id='contact-justified' role='tabpanel' aria-labelledby='contact-tab'>
-              Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+            <div class='accordion-item'>
+              <h2 class='accordion-header' id='headingTwo'>
+                <button class='accordion-button collapsed' style='font-family:verdana' type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='false' aria-controls='collapseTwo'>
+                  <strong>Auteur du travail</strong>
+                </button>
+              </h2>
+              <div id='collapseTwo' class='accordion-collapse collapse' aria-labelledby='headingTwo' data-bs-parent='#accordionExample'>
+                <div class='accordion-body'>
+                  <div class='row'>
+                    <div class='col-lg-6'>
+                      Nom : <strong>" . $row['name'] . "</strong></br>
+                      Prenom : <strong>" . $row['firstname'] . "</strong></br>
+                    </div>
+
+                    <div class='col-lg-6'>
+                      <img src='../../views/users/upload/" . $row['picture'] . "' class='rounded-circle w-50 h-60'>
+                    </div>
+                  </div>
+                  
+                  
+                </div>
+              </div>
             </div>
-          </div><!-- End Default Tabs -->
+            <div class='accordion-item'>
+              <h2 class='accordion-header' id='headingThree'>
+                <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapseThree' aria-expanded='false' aria-controls='collapseThree'>
+                <strong>Autres informations</strong>
+                </button>
+              </h2>
+              <div id='collapseThree' class='accordion-collapse collapse' aria-labelledby='headingThree' data-bs-parent='#accordionExample'>
+                <div class='accordion-body'>
+                  <button type='button' class='btn btn-secondary'>
+                    Nombre des vues:<span class='badge badge-black'>".$row['downloadNumber']."</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div><!-- End Default Accordion Example -->
 
         </div>
       </div>
     ";
-    }
-    return  $output;
+  }
+  return  $output;
 }
 
 function updatingCountNumber($title)
 {
-    $pdo = getConnexion();
+  $pdo = getConnexion();
 
-    $query = $pdo->prepare("UPDATE `coursreleased` SET `downloadNumber`= `downloadNumber`+1 WHERE `fileName` = :fileName");
+  $query = $pdo->prepare("UPDATE `coursreleased` SET `downloadNumber`= `downloadNumber`+1 WHERE `fileName` = :fileName");
 
-    $query->execute(array(
-        'fileName' => $title
-    ));
+  $query->execute(array(
+    'fileName' => $title
+  ));
 
-    if ($query) {
-        return 1;
-    }
+  if ($query) {
+    return 1;
+  }
 }
-
