@@ -136,12 +136,14 @@ require("nav.php")
 
     $(document).on("click", ".btn-approving",function(){
       var id = $(this).attr("id");
-      
+      var admin_id = "<?php echo $id ?>";
+ 
       $.ajax({
         url:"../../controllers/admin/changingStatus.php",
         method:"POST",
         data:{
-          data:id
+          data:id,
+          admin_id:admin_id
         },
         beforeSend:function(){
           return confirm("Avez-vous lu tous le travail? confirmez-vous que ce travail est bien fait? qu'il peut etre vu au public?")

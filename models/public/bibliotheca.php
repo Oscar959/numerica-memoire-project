@@ -25,7 +25,7 @@ function onLoadSelect()
 function loadTableDataCategories($select)
 {
   $pdo = getConnexion();
-  $query = $pdo->prepare("SELECT title, sumUp,fileName, statusFile, downloadNumber, CategoriesId, `name`, `firstname`, `picture` FROM coursreleased as c INNER JOIN users as u ON c.userReleasedId = u.id WHERE statusFile='1' AND CategoriesId=:CategoriesId");
+  $query = $pdo->prepare("SELECT title, sumUp,fileName,timeRegister, statusFile, downloadNumber, CategoriesId, `name`, `firstname`, `picture` FROM coursreleased as c INNER JOIN users as u ON c.userReleasedId = u.id WHERE statusFile='1' AND CategoriesId=:CategoriesId");
   //$query->bindValue(":CategoriesId", $select, PDO::PARAM_STR);
   $query->execute(array(
     "CategoriesId" => $select
@@ -38,13 +38,13 @@ function loadTableDataCategories($select)
     $output .= "
     <div class='card'>
     <div class='card-body'>
-      <h5 class='card-title text-black' style='font-family:verdana'>" . $row['title'] . "</h5>
+      <h5 class='card-title text-black'>" . $row['title'] . "</h5>
 
       <!-- Default Accordion -->
       <div class='accordion' id='accordionExample'>
         <div class='accordion-item'>
           <h2 class='accordion-header' id='headingOne'>
-            <button class='accordion-button' style='font-family:verdana' type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne'>
+            <button class='accordion-button' type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne'>
               <strong>Information du travail</strong>
             </button>
           </h2>
@@ -52,7 +52,7 @@ function loadTableDataCategories($select)
             <div class='accordion-body'>
             " . $row['sumUp'] . " <br>
 
-            <button class='btn btn-primary mt-2 link-doc-class' id='".$row['fileName']."' style='font-family:verdana' type='button'>
+            <button class='btn btn-primary mt-2 link-doc-class' id='".$row['fileName']."' type='button'>
               <strong>Lire le livre</strong>
             </button>
             </div>
@@ -60,7 +60,7 @@ function loadTableDataCategories($select)
         </div>
         <div class='accordion-item'>
           <h2 class='accordion-header' id='headingTwo'>
-            <button class='accordion-button collapsed' style='font-family:verdana' type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='false' aria-controls='collapseTwo'>
+            <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='false' aria-controls='collapseTwo'>
               <strong>Auteur du travail</strong>
             </button>
           </h2>
@@ -70,6 +70,7 @@ function loadTableDataCategories($select)
                 <div class='col-lg-6'>
                   Nom : <strong>" . $row['name'] . "</strong></br>
                   Prenom : <strong>" . $row['firstname'] . "</strong></br>
+                  Date et Heure de Parution : <strong>" . $row['timeRegister'] . "</strong></br>
                 </div>
 
                 <div class='col-lg-6'>
@@ -106,7 +107,7 @@ function loadTableDataCategories($select)
 function loadTableDataCategoriesTout()
 {
   $pdo = getConnexion();
-  $query = $pdo->prepare("SELECT title, sumUp,fileName, statusFile, downloadNumber, CategoriesId, `name`, `firstname`, `picture` FROM coursreleased as c INNER JOIN users as u ON c.userReleasedId = u.id WHERE statusFile='1'");
+  $query = $pdo->prepare("SELECT title, sumUp,fileName,timeRegister, statusFile, downloadNumber, CategoriesId, `name`, `firstname`, `picture` FROM coursreleased as c INNER JOIN users as u ON c.userReleasedId = u.id WHERE statusFile='1'");
   //$query->bindValue(":CategoriesId", $select, PDO::PARAM_STR);
   $query->execute();
   $output = "";
@@ -115,13 +116,13 @@ function loadTableDataCategoriesTout()
     $output .= "
         <div class='card'>
         <div class='card-body'>
-          <h5 class='card-title text-black' style='font-family:verdana'>" . $row['title'] . "</h5>
+          <h5 class='card-title text-black'>" . $row['title'] . "</h5>
 
           <!-- Default Accordion -->
           <div class='accordion' id='accordionExample'>
             <div class='accordion-item'>
               <h2 class='accordion-header' id='headingOne'>
-                <button class='accordion-button' style='font-family:verdana' type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne'>
+                <button class='accordion-button' type='button' data-bs-toggle='collapse' data-bs-target='#collapseOne' aria-expanded='true' aria-controls='collapseOne'>
                   <strong>Information du travail</strong>
                 </button>
               </h2>
@@ -129,7 +130,7 @@ function loadTableDataCategoriesTout()
                 <div class='accordion-body'>
                 " . $row['sumUp'] . " <br>
 
-                <button class='btn btn-primary mt-2 link-doc-class' id='".$row['fileName']."' style='font-family:verdana' type='button'>
+                <button class='btn btn-primary mt-2 link-doc-class' id='".$row['fileName']."' type='button'>
                   <strong>Lire le livre</strong>
                 </button>
                 </div>
@@ -137,7 +138,7 @@ function loadTableDataCategoriesTout()
             </div>
             <div class='accordion-item'>
               <h2 class='accordion-header' id='headingTwo'>
-                <button class='accordion-button collapsed' style='font-family:verdana' type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='false' aria-controls='collapseTwo'>
+                <button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#collapseTwo' aria-expanded='false' aria-controls='collapseTwo'>
                   <strong>Auteur du travail</strong>
                 </button>
               </h2>
@@ -147,6 +148,7 @@ function loadTableDataCategoriesTout()
                     <div class='col-lg-6'>
                       Nom : <strong>" . $row['name'] . "</strong></br>
                       Prenom : <strong>" . $row['firstname'] . "</strong></br>
+                      Date et Heure de Parution : <strong>" . $row['timeRegister'] . "</strong></br>
                     </div>
 
                     <div class='col-lg-6'>

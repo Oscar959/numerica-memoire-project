@@ -38,9 +38,9 @@
   ======================================================== -->
 </head>
 <style>
-    * {
+    /** {
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-    }
+    }*/
 </style>
 
 <body>
