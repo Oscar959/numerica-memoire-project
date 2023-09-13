@@ -1,9 +1,18 @@
-function recent_activity_per_minutes($today)
+<?php 
+
+require("../../models/connexion.php");
+require("../../controllers/function.php");
+
+
+function recent_activity_per_minutes($users)
 {
     $pdo = getConnexion();
-    $smt = $pdo->prepare("");
+    $smt = $pdo->prepare("SELECT a.name, workID, timeApproving, c.id, statusFile, u.id 
+                        FROM work_admin_status AS w 
+                        INNER JOIN coursreleased AS c ON w.workID = c.id INNER JOIN admin AS a ON w.admin_id = a.id 
+                        INNER JOIN users AS u ON c.userReleasedId = u.id WHERE statusFile = 1 AND u.id=:id;");
     $smt->execute(array(
-        'date_exam' => $today
+        'id' => $users
     ));
 
     $output = "";
@@ -12,11 +21,10 @@ function recent_activity_per_minutes($today)
         while ($row = $smt->fetch()) {
             $output .= "
                     <div class='activity-item d-flex'>
-                        <div class='activite-label'>" . timeAgo($row['debut_examen_hours']) . "</div>
+                        <div class='activite-label'>" . timeAgo($row['timeApproving']) . "</div>
                             <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
                             <div class='activity-content'>
-                            " . $row['name'] . " est le surveillant dans le local <a href='#' class='fw-bold text-dark'>" . $row['LOCAL'] . "
-                            </a> où il surveillent l'examen de " . $row['cours'] . " de la promotion " . $row['promo'] . " 
+                            " . $row['name'] . " l'admnistrateur a approuvé votre travail, donc visible au public maintenant
                             </div>
                     </div>
                 ";
@@ -24,6 +32,6 @@ function recent_activity_per_minutes($today)
 
         return $output;
     }else{
-        return "no exam started yet";
+        return "en attente d'approuval";
     }
 };
