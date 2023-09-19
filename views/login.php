@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+  <title>Numeeica unikin</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -37,11 +37,11 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   <style>
-    *,
+/*    *,
     span,
     h5 {
       font-family:Georgia, 'Times New Roman', Times, serif;
-    }
+    }*/
   </style>
 </head>
 
@@ -58,7 +58,7 @@
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="users/assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">NiceAdmin</span>
+                  <span class="d-none d-lg-block">Unikin numerica</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -67,9 +67,8 @@
                 <div class="card-body">
 
                   <div class="pt-4 pb-2">
-                    <h5 class="card-title text-center pb-0 fs-4" style="font-family:verdana">Login to Your Account</h5>
-                    <p class="text-center small">Enter your username & password to login</p>
-                    <p class="text-center small" id="login-message">Connection dans 3 secondes</p>
+                    <h5 class="card-title text-center pb-0 fs-4" style="font-family:verdana">Connection dans ton compte</h5>
+                   
                     <span id="message-login"></span>
                   </div>
 
@@ -84,7 +83,7 @@
                     </div>
 
                     <div class="col-12">
-                      <label for="yourPassword" class="form-label">Password</label>
+                      <label for="yourPassword" class="form-label">Mot de passe</label>
                       <input type="password" name="password" class="form-control" id="password" required>
                     </div>
 

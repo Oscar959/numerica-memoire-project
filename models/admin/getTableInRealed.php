@@ -15,7 +15,7 @@ function getTableInRealesed()
 
   while ($row = $query->fetch()) {
       $output .= "
-      <tr>
+      <tr style='font-family:poppins'>
         <th scope='row'><a href='#'><img src='../../views/users/upload/" . $row['picture'] . "' alt=''></a></th>
         <td><a href='../../views/users/viewingTheFIle.php?title=" . $row['fileName'] . "' class='text-primary fw-bold link-file-pdf' data-toggle='tooltip' title='lire le fichier avant de decider'>" . $row['title'] . "</a></td>
         <td class=''>" . $row['libelle'] . "</td>

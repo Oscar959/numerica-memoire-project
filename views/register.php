@@ -37,11 +37,11 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   <style>
-    *,
+   /* *,
     span,
     h5 {
       font-family:Georgia, 'Times New Roman', Times, serif;
-    }
+    }*/
   </style>
 </head>
 
@@ -58,7 +58,7 @@
               <div class="d-flex justify-content-center py-4">
                 <a href="index.html" class="logo d-flex align-items-center w-auto">
                   <img src="users/assets/img/logo.png" alt="">
-                  <span class="d-none d-lg-block">NiceAdmin</span>
+                  <span class="d-none d-lg-block">Unikin numerica</span>
                 </a>
               </div><!-- End Logo -->
 
@@ -100,12 +100,6 @@
                       <input type="file" name="file" class="form-control" id="file" required>
                     </div>
 
-                    <div class="col-12">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
-                        <label class="form-check-label" for="rememberMe">Remember me</label>
-                      </div>
-                    </div>
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Login</button>
                     </div>

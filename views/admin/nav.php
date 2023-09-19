@@ -37,11 +37,11 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
   <style>
-    *,
+    /**,
     span,
     h5,body {
       font-family:Georgia, 'Times New Roman', Times, serif;
-    }
+    }*/
   </style>
 </head>
 
